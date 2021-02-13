@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Js Assignment 1</title>
+</head>
+<body>
+    <div id="demo"></div>
+</body>
+<script>
+    const schemeAmount = 5000;
+    var splitchild=0;
+    function chainMarket()
+    {
+        var parent_member = prompt("Enter parent member name: ");
+       if(parent_member==null || parent_member=="")
+       {
+           alert("You click cancel or not entered value");
+       }
+       else{
+           var member_yes_no = prompt("Enter Y if child member else N");
+           if(member_yes_no==null || member_yes_no=="")
+           {
+               alert("You click cancel or not enter value");
+           }
+           else if(member_yes_no.toUpperCase()=='Y'){
+            var member_child = prompt("Enter child member name(with comma seprated)");
+            splitchild =  member_child.split(',');
+            var childlength = splitchild.length;
+           }
+       }
+
+      var newPro = new Promise((resolve, reject)=>{
+          if(parent_member!=null && parent_member!="" && member_yes_no!=null && member_yes_no!=""){
+            
+          	if(member_yes_no.toUpperCase()=='N')
+          	{
+          		resolve({
+                parent_member,
+                splitchild:[],
+                parentmember : schemeAmount*0.05,
+                memberchildes: 0,
+            });
+          	}
+          	else if (member_yes_no.toUpperCase()=='Y') {
+            resolve({
+                parent_member,
+                splitchild,
+                parentmember : schemeAmount*(0.1*childlength),
+                memberchildes: schemeAmount*0.05,
+            })
+        }
+        else{
+        	reject("You entered wrong keyword!!");
+        }
+        }
+      });
+       newPro.then((value)=>{
+           var d1 = document.getElementById("demo");
+           d1.insertAdjacentHTML("afterbegin",`<h3>Total Members : ${(value.splitchild.length)+1}</h3><h3>Commission Details</h3><h3> ${value.parent_member} : ${value.parentmember} INR </h3>`);
+           for(let i=0;i<value.splitchild.length;i++)
+           {
+            d1.insertAdjacentHTML("beforeend",`<h3>${value.splitchild[i]} : ${value.memberchildes} INR</h3>`);
+           }   
+       })
+       .catch((error)=>{
+			alert(error);
+		});
+
+    } 
+    chainMarket();
+</script>
+</html>
